@@ -1,0 +1,20 @@
+.products{
+  max-width: 846px;
+  width: 100%;
+}
+.prod-action{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.products-list{
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin: 30px 0 0 0;
+}
+
+.message{
+  max-width: 100px;
+  height: 40px;
+}

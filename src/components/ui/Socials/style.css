@@ -1,0 +1,17 @@
+.socials-links{
+  display: flex;
+  gap: 15px;
+}
+.soc-link {
+  font: 600 12px/14.09px Raleway;
+  color:#444444
+}
+.soc-link:hover{
+  cursor: pointer;
+}
+.soc-line{
+  width: 10px;
+  height: 1px;
+  background-color: black;
+  align-self: center;
+}
