@@ -13,7 +13,7 @@ import shopCartImg from "../../../images/header/shopping-bag.svg";
 import userImg from "../../../images/header/user.svg"
 
 
-export function Header () {
+export function Header ({ switchPage }) {
   return (
     <header className="container">
       <section className="burger-menu">
@@ -35,7 +35,7 @@ export function Header () {
         <HeaderIconMenu img={searchImg}/>
         <HeaderIconMenu img={userImg}/>
         <HeaderIconMenu img={heartImg} notification="0"/>
-        <HeaderIconMenu img={shopCartImg} notification="0"/>
+        <HeaderIconMenu img={shopCartImg} onClick={()=>switchPage("Cart")} notification="0"/>
       </section>
     </header>
   )

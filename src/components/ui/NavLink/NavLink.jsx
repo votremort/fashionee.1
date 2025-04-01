@@ -1,8 +1,8 @@
 import React from 'react';
 
-export function NavLink ({ className, href, text, img}) {
+export function NavLink ({ className, href, text, img, onClick}) {
   return (
-    <a className={className} href={href}>{text}
+    <a className={className} href={href} onClick={onClick}>{text}
     {img && <img src={img} alt='' />}
     </a>  
   )

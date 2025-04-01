@@ -18,4 +18,9 @@
   align-items: center;
   color: #444444;
 }
+.cart{
+  width: 500px;
+  border: 1px solid black;
+  background-color: gray;
+}
 

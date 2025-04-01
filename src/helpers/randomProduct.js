@@ -1,13 +1,13 @@
 //сначала получаем 1 рандомный продукт
 export const getRandomProduct = ({ products }) => {
-  const getRandomId = Math.floor(Math.random() * 24) + 1; //?
+  const getRandomId = Math.floor(Math.random() * 24) + 1;
   return products.find((product) => product.id === getRandomId);
 }
 //получаем три рандом продукта для вывода в lastViewed
 export const threeRandomProducts = (data) => {
-  const randomProducts = []; //создаем массив для трех продуктов
-  const usedId = new Set(); //создаем пустое множснтво уник знач, в котором будут храниться использованные продукты
-
+  const randomProducts = []; 
+  const usedId = new Set();
+  
   while (randomProducts.length < 3) {
     const randomProduct = getRandomProduct(data); //Находим рандом продукт
     //проверяем,нет ли этого продукта в уже использованных
