@@ -6,11 +6,16 @@ import { favoritesKey } from "../../../../helpers/constant";
 
 import { Product } from "./components/Product/Product";
 import { Sort } from "./components/Sort/Sort";
+import { Pagination } from "./components/Pagination/Pagination";
 
-export function Products ({products, changeSortType, sortType}) {
+export function Products ({ 
+  products, changeSortType, sortType, countOfProducts, changePage,
+  totalPages, currentPage
+ }) {
   //нужно для хранения массива товаров находящегося в ЛС, что бы при перезагрузке
   //корректно отображать и окрашивать сердечки избранного
   const [productsInLS, setProductsInLS] = useState([]);
+
 
 //ДОБАВЛЕНИЕ В ИЗБРАННОЕ
   const favoriteActions = (productId) => {
@@ -58,10 +63,11 @@ export function Products ({products, changeSortType, sortType}) {
   return(
     <div className="products">
       <div className="prod-action">
-        <div>There are {products.length} products in this category</div>
-        <Sort onSort={(e) => {
-          changeSortType(e.target.value)
-          }} value={sortType} />
+        <div>There are {countOfProducts} products in this category</div>
+        <Sort 
+          onSort = {(e) => changeSortType(e.target.value)}
+          value = {sortType}
+         />
       </div>
       <div className="products-list">
       {
@@ -74,7 +80,11 @@ export function Products ({products, changeSortType, sortType}) {
         />)
       }
       </div>
-      <div className="pagination"></div>
+      <Pagination 
+        setPage={changePage} 
+        totalPages={totalPages}
+        currentPage={currentPage} 
+      />
     </div>
   )
 }
