@@ -2,16 +2,7 @@ import React from "react";
 import * as SC from './styles'
 import "./style.css";
 
-//тоже нужно позже добавить в пропс
-// inFavorites, buyProduct
-
-//добавить позже в <SC.Favorite  > 
-// inFavorites={inFavorites}
-
-
-//добавить позже в <button className='buy-btn'>Купить</button>
-//onClick={() => buyProduct(product)}
-export function Product({ product, favoriteActions, inFavorites }) {
+export function Product({ product, favoriteActions, inFavorites, buyProduct }) {
 
   return(
     <div className='product'>
@@ -30,7 +21,7 @@ export function Product({ product, favoriteActions, inFavorites }) {
       <div className='product-price'>${product.price}</div>
       {product.oldPrice && <div className='product-oldPrice'>${product.oldPrice}</div>}
     </div>
-    <button className='buy-btn'>Купить</button>
+    <button className='buy-btn' onClick={() => buyProduct(product)}>Купить</button>
   </div>
   )
 }

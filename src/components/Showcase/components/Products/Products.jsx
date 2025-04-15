@@ -2,20 +2,48 @@ import React, {useEffect, useState} from "react";
 
 import "./style.css";
 
-import { favoritesKey } from "../../../../helpers/constant";
+import { favoritesKey, cartKey } from "../../../../helpers/constant";
 
 import { Product } from "./components/Product/Product";
 import { Sort } from "./components/Sort/Sort";
 import { Pagination } from "./components/Pagination/Pagination";
 
 export function Products ({ 
-  products, changeSortType, sortType, countOfProducts, changePage,
-  totalPages, currentPage
+  products, changeSortType, sortType, countOfProducts, 
+  changePage, totalPages, currentPage, 
  }) {
   //нужно для хранения массива товаров находящегося в ЛС, что бы при перезагрузке
   //корректно отображать и окрашивать сердечки избранного
   const [productsInLS, setProductsInLS] = useState([]);
 
+  const buyProduct = (product) => {
+    const fromCart = localStorage.getItem(cartKey);
+     
+    if (!fromCart) { 
+      console.log('товар добавлен в корзину')
+      localStorage.setItem(cartKey, JSON.stringify([{...product, count: 1}]));
+      return;
+    }
+    
+    const products = JSON.parse(fromCart);
+    const inCart = products.find((productInLs) => productInLs.id === product.id);
+
+    if (inCart) {
+      const newProducts = products.map((productsInLS) => {
+        if (productsInLS.id === product.id) {
+          return {
+            ...productsInLS,
+            count: productsInLS.count + 1
+          }
+        }
+        return productsInLS
+      })
+        localStorage.setItem(cartKey, JSON.stringify(newProducts));
+        return
+      }
+      products.push({...product, count: 1}) 
+      localStorage.setItem(cartKey, JSON.stringify(products));
+  } 
 
 //ДОБАВЛЕНИЕ В ИЗБРАННОЕ
   const favoriteActions = (productId) => {
@@ -77,6 +105,7 @@ export function Products ({
             product={product}
             favoriteActions={favoriteActions}
             inFavorites={productsInLS.includes(product.id)} //true => соответсвенно сердце красное
+            buyProduct={buyProduct}
         />)
       }
       </div>

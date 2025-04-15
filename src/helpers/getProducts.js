@@ -1,28 +1,24 @@
 import data from "../products.json";
 
-export const getProducts = (pagination, sortType) => {
+export const getProducts = (pagination, sortType, filters) => {
   const { products } = data;
-
+  
   //фильтрация
+  const productsForModify = onFilter(filters, products);
 
   //cортировка
-  //при загрузке получаем товары и записываем их для сортировки
-  const productsForSort = [...data.products];
   //сортируем сначала дешевле
-  onSort(productsForSort, sortType);
+  onSort(productsForModify, sortType);
 
   //пагинация
   //стартовоая страница пагинации
   const startIndex = pagination.page * pagination.itemsPerPage;
   //Делим товары на страницы
-  const slicedProducts = productsForSort.slice(startIndex, startIndex + pagination.itemsPerPage);
+  const slicedProducts = productsForModify.slice(startIndex, startIndex + pagination.itemsPerPage);
 
-
-
-  
   return {
     products: slicedProducts,
-    total: products.length
+    total: productsForModify.length
   }
 }
 
@@ -43,4 +39,32 @@ const onSort = (products, type) => {
       break;
     default:
   }
+}
+
+const onFilter = (filters, products) => {
+  let productsForModify = [...products];
+  //поиск
+  if(filters.search) {
+    productsForModify = productsForModify.filter((product) => product.name.indexOf(filters.search) !== -1);
+  }
+//категория
+  if(filters.category) {
+    productsForModify = productsForModify.filter((product) => product.categories.includes(filters.category));
+  }
+//цена
+  if(filters.prices.min && filters.prices.max) {
+    productsForModify = productsForModify.filter((product) => {
+      return product.price >= filters.prices.min && product.price <= filters.prices.max
+    })
+  } else if(filters.prices.min) {
+    productsForModify = productsForModify.filter((product) => product.price >= filters.prices.min)
+  } else if(filters.prices.max) {
+    productsForModify = productsForModify.filter((product) => product.price <= filters.prices.max)
+  }
+//цвета
+  if(filters.colors.length > 0) {
+    productsForModify = productsForModify.filter((product) => filters.colors.includes(product.color))
+  }
+
+  return productsForModify
 }

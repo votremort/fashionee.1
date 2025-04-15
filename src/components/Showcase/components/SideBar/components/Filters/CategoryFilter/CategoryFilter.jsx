@@ -2,7 +2,9 @@ import React from "react";
 
 import "./style.css";
 
-export const CategoryFilter = ({ infoForCategory }) => {
+import * as SC from "./styles";
+
+export const CategoryFilter = ({ infoForCategory, changeCategory, selectedCategory }) => {
   
   const categories = infoForCategory.categories;
 
@@ -11,11 +13,14 @@ export const CategoryFilter = ({ infoForCategory }) => {
     <div className="sidebar-title">Categories</div>
     <nav>
       <ul className="ctg-list">
+        <SC.Category isActive={selectedCategory === ''}>
+          <p className="ctg-link" onClick={() => changeCategory('')}>All</p>
+        </SC.Category>
         {
           categories.map((category)=>
-            <li key={category.id}>
-              <p className="ctg-link">{category}</p>
-            </li>
+            <SC.Category isActive={selectedCategory === category} key={category.id}>
+              <p className="ctg-link" onClick={() => changeCategory(category)}>{category}</p>
+            </SC.Category>
         )}
       </ul>
     </nav>

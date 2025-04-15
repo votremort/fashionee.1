@@ -2,7 +2,7 @@ import React from "react";
 
 import "./style.css"
 
-export const ColorFilter = ({ infoForColor }) => {
+export const ColorFilter = ({ infoForColor, onColorSelect }) => {
   const colors = infoForColor.colors;
   return (
     <section className="colors">
@@ -11,7 +11,7 @@ export const ColorFilter = ({ infoForColor }) => {
         {
           colors.map((color) =>
             <label className="color-filter" key={color.id}> 
-              <input type="checkbox" />
+              <input type="checkbox" onChange={onColorSelect} value={color}/>
               {color}
             </label>
           )

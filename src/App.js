@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 
 import data from './products.json';
+import { favoritesKey, cartKey } from './helpers/constant';
 
 import { Header } from './components/common/Header/Header';
 import { Footer } from './components/common/Footer/Footer';
@@ -17,6 +18,8 @@ function App() {
     console.log('click')
     setCurrentPage(thisPage);
   }
+
+
   return (
     <div className="App">
       <Header     

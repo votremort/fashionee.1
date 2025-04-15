@@ -54,6 +54,7 @@
 }
 
 .buy-btn{
+  display: flex;
   border: none;
   padding: 10px 20px;
   background: black;
