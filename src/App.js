@@ -13,7 +13,7 @@ import { Cart } from './components/Cart/Cart';
 
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("Shop");
+  const [currentPage, setCurrentPage] = useState("Cart");
   const switchPage = (thisPage) => {
     console.log('click')
     setCurrentPage(thisPage);

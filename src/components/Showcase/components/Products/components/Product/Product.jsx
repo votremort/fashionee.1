@@ -2,7 +2,9 @@ import React from "react";
 import * as SC from './styles'
 import "./style.css";
 
-export function Product({ product, favoriteActions, inFavorites, buyProduct }) {
+export function Product({ product, favoriteActions, inFavorites, buyProduct, changeCount }) {
+
+
 
   return(
     <div className='product'>
@@ -21,7 +23,18 @@ export function Product({ product, favoriteActions, inFavorites, buyProduct }) {
       <div className='product-price'>${product.price}</div>
       {product.oldPrice && <div className='product-oldPrice'>${product.oldPrice}</div>}
     </div>
+    <SC.BuyWrap>
     <button className='buy-btn' onClick={() => buyProduct(product)}>Купить</button>
+    <SC.Counter>
+      <SC.CounterBtn onClick={() => changeCount(product.id, product.count - 1)} >−</SC.CounterBtn>
+        <SC.Count 
+          type="text" 
+          value={product.count} 
+          onChange={(e) => changeCount(product.id, e.target.value)}
+        />
+      <SC.CounterBtn onClick={() => changeCount(product.id, product.count + 1)} >+</SC.CounterBtn>
+    </SC.Counter>
+    </SC.BuyWrap>
   </div>
   )
 }
