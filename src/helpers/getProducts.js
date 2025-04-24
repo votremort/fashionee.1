@@ -43,9 +43,11 @@ const onSort = (products, type) => {
 
 const onFilter = (filters, products) => {
   let productsForModify = [...products];
+
   //поиск
   if(filters.search) {
-    productsForModify = productsForModify.filter((product) => product.name.indexOf(filters.search) !== -1);
+    const searchLowerCase = filters.search.toLowerCase();
+    productsForModify = productsForModify.filter((product) => product.name.toLowerCase().indexOf(searchLowerCase)!== -1);
   }
 //категория
   if(filters.category) {
@@ -68,3 +70,4 @@ const onFilter = (filters, products) => {
 
   return productsForModify
 }
+

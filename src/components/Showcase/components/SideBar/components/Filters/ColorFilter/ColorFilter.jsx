@@ -1,22 +1,22 @@
 import React from "react";
 
-import "./style.css"
+import * as SC from "./styles";
 
 export const ColorFilter = ({ infoForColor, onColorSelect }) => {
   const colors = infoForColor.colors;
   return (
-    <section className="colors">
-      <div className="sidebar-title">Colors</div>
-      <div className="color-list">
+    <SC.Colors>
+      <SC.Title>Colors</SC.Title>
+      <SC.ColorList>
         {
           colors.map((color) =>
-            <label className="color-filter" key={color.id}> 
+            <SC.ColorFilter key={color.id}> 
               <input type="checkbox" onChange={onColorSelect} value={color}/>
               {color}
-            </label>
+            </SC.ColorFilter>
           )
         }
-      </div>
-    </section>
+      </SC.ColorList>
+    </SC.Colors>
   )
 }

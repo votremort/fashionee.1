@@ -1,26 +1,7 @@
-.content-block{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 50px;
-  padding-bottom: 200px;
-}
-.content-title{
-  font: 400 80px/100% Josefin Sans;
-}
-.content-nav{
-  display: flex;
-  border-left: 2px solid black;
-}
 .cb-nav-link{
   text-decoration: none;
   color: #444444;
   font: 500 14px/15px Raleway;
   margin-left: 12px;
   cursor: pointer;
-}
-.cb-image{
-  width: 600px;
-  height: 350px;
-  background-color: rgb(241, 242, 243);
 }

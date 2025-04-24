@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import "./style.css";
+
+import * as SC from "./styles"
 
 import { Search } from "./components/Search/Search";
 import { Filters } from "./components/Filters/Filters";
@@ -12,7 +13,7 @@ export function SideBar ({
 
 
   return(
-    <div className="sidebar">
+    <SC.Sidebar>
       <Search changeSearch={changeSearch} />
       <Filters 
         changeCategory={changeCategory} 
@@ -23,6 +24,6 @@ export function SideBar ({
         changeColors={changeColors}
       />
       <LastViewed/>
-    </div>
+    </SC.Sidebar>
   )
 }

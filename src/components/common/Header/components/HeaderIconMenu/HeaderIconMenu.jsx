@@ -1,9 +1,9 @@
 import React from "react";
-
+import * as SC from "./styles"
 export function HeaderIconMenu ({img, notification, onClick}) {
   return (
-    <button className="h-icon" onClick={onClick}> <img className="icon-img" src={img} alt='' /> 
-    {notification && <div className='notification'>{notification}</div>}
-    </button>
+    <SC.IconMenuBtn onClick={onClick}> <SC.IconImg src={img} alt='' /> 
+    {notification && <SC.IconNotification>{notification}</SC.IconNotification>}
+    </SC.IconMenuBtn>
   )
 }

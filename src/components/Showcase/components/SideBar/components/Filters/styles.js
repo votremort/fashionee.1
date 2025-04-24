@@ -1,4 +1,5 @@
-.apply-btn{
+import styled from "styled-components";
+export const ApplyBtn = styled.button`
   margin-top: 20px;
   font: 600 16px/100% Raleway;
   max-width: 236px;
@@ -6,5 +7,4 @@
   padding: 17px 75px;
   color: white;
   background-color: black;
-}
-
+`

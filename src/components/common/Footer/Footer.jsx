@@ -1,6 +1,7 @@
 import React from "react";
 
-import "./style.css"
+import "./style.css";
+import * as SC from "./styles";
 
 import { Socials } from "../../ui/Socials/Socials";
 import { NavLink } from "../../ui/NavLink/NavLink";
@@ -13,60 +14,59 @@ import payoneerImg from "../../../images/footer/payoneer.svg";
 
 export function Footer() {
   return(
-    <footer>
-      <div className="border-top" />
-      <div className="container">
-        <section className="footer-row-info">
-          <div className="footer-logo-link">
-            <div className="footer-logo">
-              <img className="f-logo-img" src={logoImg} alt="fashionee"/>
-              <p className="f-logo-text">Cillum eu id enim aliquip aute ullamco anim.<br />Culpa deserunt nostrud excepteur voluptate.
-              </p>
-            </div>
-            <div className="footer-socials">
-              <p className="f-soc-title">Find us here:</p>
+    <SC.FooterWrap>
+      <SC.BorderTop />
+      <SC.ContainerWrap>
+        <SC.RowInfo>
+          <SC.LogoLink>
+            <SC.LogoWrap>
+              <SC.LogoImg src={logoImg} alt="fashionee"/>
+              <SC.LogoText>Cillum eu id enim aliquip aute ullamco anim.<br />Culpa deserunt nostrud excepteur voluptate.
+              </SC.LogoText>
+            </SC.LogoWrap>
+            <SC.SocialsWrap>
+              <SC.SocialTitle>Find us here:</SC.SocialTitle>
               <Socials /> 
-            </div>
-          </div>
-          <section className="footer-about">
-            <p className="f-title">About</p>
-            <ul>
+            </SC.SocialsWrap>
+          </SC.LogoLink>
+          <SC.AboutWrap>
+            <SC.Title>About</SC.Title>
+            <SC.List>
               <li><NavLink className="f-nav-link" href="#" text="About us"/></li>
               <li><NavLink className="f-nav-link" href="#" text="Collections"/></li>
               <li><NavLink className="f-nav-link" href="#" text="Shop"/></li>
               <li><NavLink className="f-nav-link" href="#" text="Blog"/></li>
               <li><NavLink className="f-nav-link" href="#" text="Contact us"/></li>
-            </ul>
-          </section>
-          <section className="footer-usefulLinks">
-            <p className="f-title">Useful Links</p>
-            <ul>
+            </SC.List>
+          </SC.AboutWrap>
+          <SC.UsefulLinksWrap>
+            <SC.Title>Useful Links</SC.Title>
+            <SC.List>
               <li><NavLink className="f-nav-link" href="#" text="Privacy Policy"/></li>
               <li><NavLink className="f-nav-link" href="#" text="Terms of use"/></li>
               <li><NavLink className="f-nav-link" href="#" text="Support"/></li>
               <li><NavLink className="f-nav-link" href="#" text="Shipping details"/></li>
               <li><NavLink className="f-nav-link" href="#" text="FAQs"/></li>
-            </ul>
-          </section>
-        </section>
-        <section className="footer-bottomBar">
-          <div className="footer-copy-pay">
-            <div className="footer-copyright">
-              <p className="f-text">© All right reserved. Fashionee 2020</p>
-            </div>
-            <div className="footer-payments">
-              <p className="f-text">Payment methods:</p>
-              <div className="f-payments-list">
-                <img className="f-pay-img" src={visaImg} alt="visa"/>
-                <img className="f-pay-img" src={masterImg} alt="masterCard"/>
-                <img className="f-pay-img" src={paypalImg} alt="paypal"/>
-                <img className="f-pay-img" src={payoneerImg} alt="payoneer"/>
-              </div>
-            </div>
-          </div>
-        
-        </section>
-      </div>
-    </footer>
+            </SC.List>
+          </SC.UsefulLinksWrap>
+        </SC.RowInfo>
+        <SC.BottomBar>
+          <SC.CopyPayWrap>
+            <SC.Copyright>
+              <SC.Text>© All right reserved. Fashionee 2020</SC.Text>
+            </SC.Copyright>
+            <SC.Payments>
+              <SC.Text>Payment methods:</SC.Text>
+              <SC.PaymentsList>
+                <SC.PayImg src={visaImg} alt="visa"/>
+                <SC.PayImg src={masterImg} alt="masterCard"/>
+                <SC.PayImg src={paypalImg} alt="paypal"/>
+                <SC.PayImg src={payoneerImg} alt="payoneer"/>
+              </SC.PaymentsList>
+            </SC.Payments>
+          </SC.CopyPayWrap>
+        </SC.BottomBar>
+      </SC.ContainerWrap>
+    </SC.FooterWrap>
   )
 }

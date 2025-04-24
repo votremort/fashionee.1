@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import "./style.css";
+import * as SC from "./styles";
 
 import { favoritesKey, cartKey } from "../../../../helpers/constant";
 
@@ -15,13 +15,16 @@ export function Products ({
   //нужно для хранения массива товаров находящегося в ЛС, что бы при перезагрузке
   //корректно отображать и окрашивать сердечки избранного
   const [productsInLS, setProductsInLS] = useState([]);
+  const productsWithCount = [];
+  products.map((product) => {
+    return productsWithCount.push({...product, count: 0});
+  });
 
   const buyProduct = (product) => {
     const fromCart = localStorage.getItem(cartKey);
      
     if (!fromCart) { 
-      console.log('товар добавлен в корзину')
-      localStorage.setItem(cartKey, JSON.stringify([{...product, count: 1}]));
+      localStorage.setItem(cartKey, JSON.stringify([{product, count: 1}]));
       return;
     }
     
@@ -89,17 +92,17 @@ export function Products ({
   }, [])
 
   return(
-    <div className="products">
-      <div className="prod-action">
+    <SC.Products>
+      <SC.ActionProduct>
         <div>There are {countOfProducts} products in this category</div>
         <Sort 
           onSort = {(e) => changeSortType(e.target.value)}
           value = {sortType}
          />
-      </div>
-      <div className="products-list">
+      </SC.ActionProduct>
+      <SC.ProductsList>
       {
-        products.map((product) => 
+        productsWithCount.map((product) => 
           <Product 
             key={product.id} 
             product={product}
@@ -108,12 +111,12 @@ export function Products ({
             buyProduct={buyProduct}
         />)
       }
-      </div>
+      </SC.ProductsList>
       <Pagination 
         setPage={changePage} 
         totalPages={totalPages}
         currentPage={currentPage} 
       />
-    </div>
+    </SC.Products>
   )
 }

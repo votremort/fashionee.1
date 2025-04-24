@@ -1,14 +1,14 @@
 import React from "react";
-import './style.css';
+import * as SC from "./styles"
 
 export const Socials = () => (
-  <div className='socials-links'>
-    <p className='soc-link'>FB</p>
-    <div className='soc-line'/>
-    <p className='soc-link'>TW</p>
-    <div className='soc-line'/>
-    <p className='soc-link'>INS</p>
-    <div className='soc-line'/>
-    <p className='soc-link'>PT</p>
-  </div>
+  <SC.SocialsWrap>
+    <SC.SocLink>FB</SC.SocLink>
+    <SC.SocLine />
+    <SC.SocLink>TW</SC.SocLink>
+    <SC.SocLine />
+    <SC.SocLink>INS</SC.SocLink>
+    <SC.SocLine />
+    <SC.SocLink>PT</SC.SocLink>
+  </SC.SocialsWrap>
 )

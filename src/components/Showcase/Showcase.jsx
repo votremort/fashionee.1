@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import "./style.css";
+import * as SC from "./styles";
 
-import data from "../../products.json"
-import { favoritesKey } from "../../helpers/constant";
 import { getProducts } from "../../helpers/getProducts";
 
 import { SideBar } from "./components/SideBar/SideBar";
@@ -56,7 +54,7 @@ export function Showcase() {
       prices,
       colors: selectedColors
     }
-
+    
     const info = getProducts(pagination, sortType, filters);
 
     setProducts(info.products);
@@ -65,8 +63,8 @@ export function Showcase() {
 
 
   return (
-    <div className="container">
-      <div className="showcase">
+    <SC.Container>
+      <SC.Showcase>
         <SideBar 
           changeSearch={changeSearch} 
           changeCategory={changeCategory}
@@ -83,8 +81,8 @@ export function Showcase() {
          totalPages = {Math.ceil(countOfProducts / itemsPerPage)}
          currentPage = {page}
          />
-    </div>
-    </div>
+    </SC.Showcase>
+    </SC.Container>
 
   )
 }

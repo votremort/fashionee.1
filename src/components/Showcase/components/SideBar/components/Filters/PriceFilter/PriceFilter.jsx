@@ -1,24 +1,23 @@
 import React from "react";
 
-import "./style.css";
+import * as SC from "./styles";
 
 export const PriceFilter = ({ infoForPrice, changeMinPrice, changeMaxPrice }) => {
   const minPrice = infoForPrice.prices.min;
   const maxPrice = infoForPrice.prices.max;
   return (
-    <section className="price">
-      <div className="sidebar-title">Price</div>
-      <span className="price"></span>
-      <div className="price-range">
-        <label className="price-label">
+    <section>
+      <SC.Title>Price</SC.Title>
+      <SC.PriceWrap>
+        <SC.PriceLabel>
           Min:
-          <input className="price-input" placeholder={minPrice} onChange={changeMinPrice} />
-        </label>
-        <label className="price-label">
+          <SC.PriceInput placeholder={minPrice} onChange={changeMinPrice} />
+        </SC.PriceLabel>
+        <SC.PriceLabel>
           Max:
-          <input className="price-input" placeholder={maxPrice} onChange={changeMaxPrice} />
-        </label>
-      </div>
+          <SC.PriceInput placeholder={maxPrice} onChange={changeMaxPrice} max={maxPrice} />
+        </SC.PriceLabel>
+      </SC.PriceWrap>
     </section>
   )
 }

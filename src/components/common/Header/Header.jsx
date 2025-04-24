@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+import * as SC from "./styles";
 
 import { NavLink } from "../../ui/NavLink/NavLink";
 import { HeaderIconMenu } from "./components/HeaderIconMenu/HeaderIconMenu";
@@ -15,28 +16,28 @@ import userImg from "../../../images/header/user.svg"
 
 export function Header ({ switchPage }) {
   return (
-    <header className="container">
-      <section className="burger-menu">
+    <SC.HeaderWrap>
+      <SC.BurgerMenu>
         <img src={burgerImg} alt="burger-menu"/>
-      </section>
-      <section className="header-logo">
+      </SC.BurgerMenu>
+      <SC.HeaderLogo>
         <img src={logoImg} alt="fashionee"/>
-      </section>
-      <section className="header-nav">
-        <nav className="header-nav">
+      </SC.HeaderLogo>
+      <SC.HeaderNavWrap>
+        <SC.HeaderNav>
           <NavLink className="h-nav-link" href="#" text="Home"/>
           <NavLink className="h-nav-link" href="#" text="Pages" img={chevronImg}/>
           <NavLink className="h-nav-link" href="#" text="Shop" img={chevronImg}/>
           <NavLink className="h-nav-link" href="#" text="Blog"/>
           <NavLink className="h-nav-link" href="#" text="Contact"/>
-        </nav>
-      </section>
-      <section className="header-icon-menu">
+        </SC.HeaderNav>
+      </SC.HeaderNavWrap>
+      <SC.HeaderIconWrap>
         <HeaderIconMenu img={searchImg}/>
         <HeaderIconMenu img={userImg}/>
         <HeaderIconMenu img={heartImg} notification="0"/>
         <HeaderIconMenu img={shopCartImg} onClick={()=>switchPage("Cart")} notification="0"/>
-      </section>
-    </header>
+      </SC.HeaderIconWrap>
+    </SC.HeaderWrap>
   )
 }

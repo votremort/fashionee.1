@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import "./style.css";
+import * as SC from "./styles";
 
 import data from "../../../../../../products.json";
 import { threeRandomProducts } from "../../../../../../helpers/randomProduct";
@@ -14,21 +14,21 @@ export const LastViewed = () => {
     setRandomProducts(randomProducts);
   }, [])
   return (
-<section className="last-viewed">
-      <div className="sidebar-title">Reviewed by you</div>
-      <div className="last-products">
+    <section>
+      <SC.Title>Reviewed by you</SC.Title>
+      <SC.LastProducts>
         {
           randomProducts.map((product)=>
-            <div className="last-product-card" key={product.id}>
-              <img src={product.image} alt=" " />
-              <div className="last-prod-info">
-                <div className="last-prod-name">{product.name}</div>
-                <div className="last-prod-price">{product.price}</div>
-                <div className="last-prod-oldPrice">{product.oldPrice}</div>
-              </div>
-            </div>
+            <SC.ProductCard key={product.id}>
+              <SC.ProductImg src={product.image} alt=" " />
+              <SC.InfoWrap>
+                <SC.NameProduct>{product.name}</SC.NameProduct>
+                <SC.PriceProduct>{product.price}</SC.PriceProduct>
+                <SC.OldPriceProduct>{product.oldPrice}</SC.OldPriceProduct>
+              </SC.InfoWrap>
+            </SC.ProductCard>
         )}
-      </div>
+      </SC.LastProducts>
     </section>
   )
 }

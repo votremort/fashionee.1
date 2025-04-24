@@ -1,7 +1,5 @@
 import React from "react";
 
-import "./style.css";
-
 import * as SC from "./styles";
 
 export const CategoryFilter = ({ infoForCategory, changeCategory, selectedCategory }) => {
@@ -9,21 +7,21 @@ export const CategoryFilter = ({ infoForCategory, changeCategory, selectedCatego
   const categories = infoForCategory.categories;
 
   return(
-    <section className="categories">
-    <div className="sidebar-title">Categories</div>
+    <SC.Categories>
+    <SC.Title>Categories</SC.Title>
     <nav>
-      <ul className="ctg-list">
+      <SC.CtgList>
         <SC.Category isActive={selectedCategory === ''}>
-          <p className="ctg-link" onClick={() => changeCategory('')}>All</p>
+          <SC.CtgLink onClick={() => changeCategory('')}>All</SC.CtgLink>
         </SC.Category>
         {
           categories.map((category)=>
             <SC.Category isActive={selectedCategory === category} key={category.id}>
-              <p className="ctg-link" onClick={() => changeCategory(category)}>{category}</p>
+              <SC.CtgLink onClick={() => changeCategory(category)}>{category}</SC.CtgLink>
             </SC.Category>
         )}
-      </ul>
+      </SC.CtgList>
     </nav>
-  </section>
+  </SC.Categories>
   )
 }

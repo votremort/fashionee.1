@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import "./style.css"
+
+import * as SC from "./styles";
 
 import { CategoryFilter } from "./CategoryFilter/CategoryFilter";
 import { PriceFilter } from "./PriceFilter/PriceFilter";
@@ -27,7 +28,12 @@ export const Filters = ({
   }
   const changeMaxPrice = (e) => {
     const price = +e.target.value;
-    setSelectedMaxPrice(price);
+    if(price <= infoForFilters.prices.max) {
+      setSelectedMaxPrice(price);
+    } else {
+      alert('Максимально возможная цена: $210.99');
+    }
+    
   }
 
   const onColorSelect = (e) => {
@@ -63,7 +69,7 @@ export const Filters = ({
         infoForColor={infoForFilters}
         onColorSelect={onColorSelect}
       />
-      <button onClick={applyFilter} className="apply-btn">Apply filter</button>
+      <SC.ApplyBtn onClick={applyFilter} className="apply-btn">Apply filter</SC.ApplyBtn>
     </div>
   )
 }
