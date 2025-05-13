@@ -1,8 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
+import { LSprovider } from './context/LScontext';
 import './App.css';
-
-import data from './products.json';
-import { favoritesKey, cartKey } from './helpers/constant';
 
 import { Header } from './components/common/Header/Header';
 import { Footer } from './components/common/Footer/Footer';
@@ -21,6 +19,7 @@ function App() {
 
 
   return (
+  <LSprovider>
     <div className="App">
       <Header     
         switchPage={switchPage} 
@@ -32,6 +31,8 @@ function App() {
       {currentPage === "Cart" ?  <Cart /> : <Showcase />}
       <Footer />
     </div>
+  </LSprovider>
+    
   );
 }
 

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { useLS } from "../../../../context/LScontext"; //импорт контекста
 
 import * as SC from "./styles";
 
@@ -12,6 +13,7 @@ export function Products ({
   products, changeSortType, sortType, countOfProducts, 
   changePage, totalPages, currentPage, 
  }) {
+  const { updateCart, updateFavorites } = useLS(); //функции для обновления состояния
   //нужно для хранения массива товаров находящегося в ЛС, что бы при перезагрузке
   //корректно отображать и окрашивать сердечки избранного
   const [productsInLS, setProductsInLS] = useState([]);
@@ -24,29 +26,81 @@ export function Products ({
     const fromCart = localStorage.getItem(cartKey);
      
     if (!fromCart) { 
-      localStorage.setItem(cartKey, JSON.stringify([{product, count: 1}]));
+      // localStorage.setItem(cartKey, JSON.stringify([{product, count: 1}]));
+      updateCart([{product, count: 1}])
       return;
     }
     
     const products = JSON.parse(fromCart);
-    const inCart = products.find((productInLs) => productInLs.id === product.id);
+    const inCart = products.find((productInCart) => productInCart.id === product.id);
 
     if (inCart) {
-      const newProducts = products.map((productsInLS) => {
-        if (productsInLS.id === product.id) {
+      const newProducts = products.map((productInCart) => {
+        if (productInCart.id === product.id) {
           return {
-            ...productsInLS,
-            count: productsInLS.count + 1
+            ...productInCart,
+            count: productInCart.count + 1
           }
         }
-        return productsInLS
+        return productInCart
       })
-        localStorage.setItem(cartKey, JSON.stringify(newProducts));
+        // localStorage.setItem(cartKey, JSON.stringify(newProducts));
+        updateCart(newProducts)
         return
       }
       products.push({...product, count: 1}) 
-      localStorage.setItem(cartKey, JSON.stringify(products));
+      // localStorage.setItem(cartKey, JSON.stringify(products));
+      updateCart(products)
+
   } 
+
+  //УВЕЛИЧЕНИЕ ТОВАРА В КОРЗИНЕ
+  const increaseProductCount = (product) => {
+    const fromCart = localStorage.getItem(cartKey);
+    const products = fromCart ? JSON.parse(fromCart) : []; //если фромКарт не пустое, то исп оно, если пустое то пустой массив
+
+    const inCart = products.find((productInCart) => productInCart.id === product.id);
+
+    if (inCart) {
+      const newProducts = products.map((productInCart) => {
+        if(productInCart.id === product.id) {
+          return {
+            ...productInCart,
+            count: productInCart.count + 1
+          };
+        } 
+        return productInCart;
+      });
+      // localStorage.setItem(cartKey, JSON.stringify(newProducts))
+      updateCart(newProducts)
+    }
+  }
+
+  //УМЕНЬШЕНИЕ ТОВАРА В КОРЗИНЕ
+  const decreaseProductCount = (productId) => {
+    const fromCart = localStorage.getItem(cartKey);
+    if (!fromCart) return; //если корзина пустая то ниче не делаем
+
+    const products = JSON.parse(fromCart);
+
+    const productIndex = products.findIndex(productInCart => productInCart.id ===productId.id);
+    if(productIndex === -1) return; //если этого товара нет в корзине то ниче не делаем
+
+    const product = products[productIndex];
+
+    const newCount = product.count - 1;
+
+    if (newCount <= 0) {
+      products.splice(productIndex, 1);
+    } else {
+      products[productIndex] = {
+        ...product,
+        count: newCount
+      };
+    }
+    // localStorage.setItem(cartKey, JSON.stringify(products))
+    updateCart(products)
+  }
 
 //ДОБАВЛЕНИЕ В ИЗБРАННОЕ
   const favoriteActions = (productId) => {
@@ -55,7 +109,8 @@ export function Products ({
      //если это первое добавление в избранное, то передаем туда массив + первый id, который далее будет наполняться
     if (!fromLS) {
       setProductsInLS([productId]); //добавляем в состояние для моментального обновления
-      localStorage.setItem(favoritesKey, JSON.stringify([productId]));
+      // localStorage.setItem(favoritesKey, JSON.stringify([productId]));
+      updateFavorites([productId])
       return;
     }
     const products = JSON.parse(fromLS);
@@ -69,7 +124,8 @@ export function Products ({
       //добавляем в состояние для моментального обновления
       setProductsInLS(filteredProducts);
       //обновляем массив в локал сторадж
-      localStorage.setItem(favoritesKey, JSON.stringify(filteredProducts));
+      // localStorage.setItem(favoritesKey, JSON.stringify(filteredProducts));
+      updateFavorites(filteredProducts)
       return;
     } 
     //если товара нет, то добавляем в массив
@@ -77,7 +133,8 @@ export function Products ({
     //добавляем в состояние для моментального обновления
     setProductsInLS(products);
     //обновляем массив в локал сторадж
-    localStorage.setItem(favoritesKey, JSON.stringify(products));
+    // localStorage.setItem(favoritesKey, JSON.stringify(products));
+    updateFavorites(products)
   };
 
   useEffect(() => {
@@ -109,6 +166,8 @@ export function Products ({
             favoriteActions={favoriteActions}
             inFavorites={productsInLS.includes(product.id)} //true => соответсвенно сердце красное
             buyProduct={buyProduct}
+            increaseProductCount={increaseProductCount}
+            decreaseProductCount={decreaseProductCount}
         />)
       }
       </SC.ProductsList>

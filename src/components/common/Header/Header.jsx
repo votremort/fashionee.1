@@ -1,4 +1,5 @@
 import React from "react";
+import { useLS } from "../../../context/LScontext"; //импорт контекста
 import "./style.css";
 import * as SC from "./styles";
 
@@ -15,6 +16,7 @@ import userImg from "../../../images/header/user.svg"
 
 
 export function Header ({ switchPage }) {
+  const { cartItems, favoritesItems } = useLS();
   return (
     <SC.HeaderWrap>
       <SC.BurgerMenu>
@@ -35,8 +37,10 @@ export function Header ({ switchPage }) {
       <SC.HeaderIconWrap>
         <HeaderIconMenu img={searchImg}/>
         <HeaderIconMenu img={userImg}/>
-        <HeaderIconMenu img={heartImg} notification="0"/>
-        <HeaderIconMenu img={shopCartImg} onClick={()=>switchPage("Cart")} notification="0"/>
+        <HeaderIconMenu img={heartImg} notification={favoritesItems.length}/>
+        <HeaderIconMenu img={shopCartImg} 
+          onClick={()=>switchPage("Cart")} 
+          notification={cartItems.reduce((acc, item) => acc + item.count, 0)}/>
       </SC.HeaderIconWrap>
     </SC.HeaderWrap>
   )

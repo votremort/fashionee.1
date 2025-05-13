@@ -3,8 +3,7 @@ import React from "react";
 import * as SC from './styles'
 
 
-export function Product({ product, favoriteActions, inFavorites, buyProduct, changeCount }) {
-
+export function Product({ product, favoriteActions, inFavorites, buyProduct, increaseProductCount, decreaseProductCount }) {
 
   return(
     <SC.Product>
@@ -26,13 +25,13 @@ export function Product({ product, favoriteActions, inFavorites, buyProduct, cha
     <SC.BuyWrap>
       <SC.BuyBtn onClick={() => buyProduct(product)}>Купить</SC.BuyBtn>
       <SC.Counter>
-        <SC.CounterBtn onClick={() => console.log(product.count)} >−</SC.CounterBtn>
+        <SC.CounterBtn onClick={() => decreaseProductCount(product)} >−</SC.CounterBtn>
           <SC.Count 
             type="text" 
             value={product.count} 
-            onChange={(e) => changeCount(product.id, +e.target.value)}
+            readOnly
           />
-        <SC.CounterBtn onClick={() => changeCount(product.id, product.count + 1)} >+</SC.CounterBtn>
+        <SC.CounterBtn onClick={() => increaseProductCount(product)} >+</SC.CounterBtn>
       </SC.Counter>
     </SC.BuyWrap>
   </SC.Product>
