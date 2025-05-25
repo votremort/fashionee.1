@@ -15,13 +15,11 @@ const infoForFilters = getFilters(data);
 export const Filters = ({ 
   changeCategory, selectedCategory, changePrices, 
  changeColors }) => {
-
-
   const [selectedMinPrice, setSelectedMinPrice] = useState(infoForFilters.prices.min);
   const [selectedMaxPrice, setSelectedMaxPrice] = useState(infoForFilters.prices.max);
   const [selectedColors, setSelectedColors] = useState([]);
+  // const [localSelectedCategory, setLocalSelectedCategory] = useState(selectedCategory)
   
-
   const changeMinPrice = (e) => {
     const price = +e.target.value;
     setSelectedMinPrice(price);
@@ -47,6 +45,8 @@ export const Filters = ({
   };
 
   const applyFilter = () => {
+    // setLocalSelectedCategory(localSelectedCategory)
+    // changeCategory(localSelectedCategory)
     changePrices(selectedMinPrice, selectedMaxPrice)
     changeColors(selectedColors)
   }
@@ -58,7 +58,7 @@ export const Filters = ({
       <CategoryFilter 
         infoForCategory={infoForFilters}
         changeCategory={changeCategory}
-        selectedCategory={selectedCategory}
+        selectedCategory={selectedCategory} //пробовала передать localSelectedCategory
       />
       <PriceFilter 
         infoForPrice={infoForFilters}

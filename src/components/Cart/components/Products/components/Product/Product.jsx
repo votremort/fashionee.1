@@ -1,8 +1,18 @@
 import React from "react";
 
 import * as SC from "./styles"
+//changeCount
+//onClick={() => changeCount(product.id, product.count - 1)}
 
 export const Product = ({ product, changeCount }) => {
+  const handleDecrease = () => {
+    changeCount(product.id, product.count - 1);
+  };
+
+  const handleIncrease = () => {
+    changeCount(product.id, product.count + 1);
+  };
+
   return(
     <SC.Product>
       <SC.ProductInfo>
@@ -15,13 +25,13 @@ export const Product = ({ product, changeCount }) => {
               <SC.Price>${product.price}</SC.Price>
             </SC.Prices>
             <SC.Counter>
-              <SC.CounterBtn onClick={() => changeCount(product.id, product.count - 1)} >−</SC.CounterBtn>
+              <SC.CounterBtn onClick={handleDecrease} >−</SC.CounterBtn>
               <SC.Count 
                 type="text" 
                 value={product.count} 
-                onChange={(e) => changeCount(product.id, e.target.value)}
+                readOnly
               />
-              <SC.CounterBtn onClick={() => changeCount(product.id, product.count + 1)} >+</SC.CounterBtn>
+              <SC.CounterBtn onClick={handleIncrease}>+</SC.CounterBtn>
             </SC.Counter>
           </SC.PricesWrap>
         </SC.InfoWrap>

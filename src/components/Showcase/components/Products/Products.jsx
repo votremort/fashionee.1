@@ -17,73 +17,64 @@ export function Products ({
   //нужно для хранения массива товаров находящегося в ЛС, что бы при перезагрузке
   //корректно отображать и окрашивать сердечки избранного
   const [productsInLS, setProductsInLS] = useState([]);
-  const productsWithCount = [];
-  products.map((product) => {
-    return productsWithCount.push({...product, count: 0});
-  });
 
   const buyProduct = (product) => {
     const fromCart = localStorage.getItem(cartKey);
-     
-    if (!fromCart) { 
-      // localStorage.setItem(cartKey, JSON.stringify([{product, count: 1}]));
-      updateCart([{product, count: 1}])
-      return;
-    }
-    
-    const products = JSON.parse(fromCart);
-    const inCart = products.find((productInCart) => productInCart.id === product.id);
+    let products = fromCart ? JSON.parse(fromCart) : [];
+
+    //ищем товар по productID
+    const inCart = products.find((item) => item.productID === product.id);
 
     if (inCart) {
-      const newProducts = products.map((productInCart) => {
-        if (productInCart.id === product.id) {
+      //увеличиваем count
+      const newProducts = products.map((item) => {
+        if (item.productID === product.id) {
           return {
-            ...productInCart,
-            count: productInCart.count + 1
+            productID: item.productID,
+            count: item.count + 1
           }
         }
-        return productInCart
+        return item;
       })
-        // localStorage.setItem(cartKey, JSON.stringify(newProducts));
         updateCart(newProducts)
         return
-      }
-      products.push({...product, count: 1}) 
-      // localStorage.setItem(cartKey, JSON.stringify(products));
+    } else{
+      products.push({productID: product.id, count: 1});
       updateCart(products)
+    }
 
   } 
 
   //УВЕЛИЧЕНИЕ ТОВАРА В КОРЗИНЕ
   const increaseProductCount = (product) => {
     const fromCart = localStorage.getItem(cartKey);
-    const products = fromCart ? JSON.parse(fromCart) : []; //если фромКарт не пустое, то исп оно, если пустое то пустой массив
+    if (!fromCart) return;
 
-    const inCart = products.find((productInCart) => productInCart.id === product.id);
+    const products = JSON.parse(fromCart);
 
-    if (inCart) {
-      const newProducts = products.map((productInCart) => {
-        if(productInCart.id === product.id) {
-          return {
-            ...productInCart,
-            count: productInCart.count + 1
-          };
-        } 
-        return productInCart;
-      });
-      // localStorage.setItem(cartKey, JSON.stringify(newProducts))
-      updateCart(newProducts)
-    }
+    const inCart = products.find((item) => item.productID === product.id);
+    if (!inCart) return;
+
+    const newProducts = products.map((item) => {
+      if(item.productID === product.id) {
+        return {
+          productID: item.productID,
+          count: item.count + 1
+        };
+      } 
+      return item;
+    });
+    updateCart(newProducts)
   }
 
   //УМЕНЬШЕНИЕ ТОВАРА В КОРЗИНЕ
-  const decreaseProductCount = (productId) => {
+  const decreaseProductCount = (productID) => {
     const fromCart = localStorage.getItem(cartKey);
     if (!fromCart) return; //если корзина пустая то ниче не делаем
 
     const products = JSON.parse(fromCart);
 
-    const productIndex = products.findIndex(productInCart => productInCart.id ===productId.id);
+    const productIndex = products.findIndex(item => item.productID === productID);
     if(productIndex === -1) return; //если этого товара нет в корзине то ниче не делаем
 
     const product = products[productIndex];
@@ -94,13 +85,22 @@ export function Products ({
       products.splice(productIndex, 1);
     } else {
       products[productIndex] = {
-        ...product,
+        productID: product.productID,
         count: newCount
       };
     }
-    // localStorage.setItem(cartKey, JSON.stringify(products))
     updateCart(products)
   }
+ 
+//получение количества товара в корзине
+const getProductCountFromCart = (productID) => {
+  const fromCart = localStorage.getItem(cartKey);
+  if (!fromCart) return 0;
+
+  const products = JSON.parse(fromCart);
+  const productsInCart = products.find(item => item.productID === productID);
+  return productsInCart ? productsInCart.count : 0;
+}
 
 //ДОБАВЛЕНИЕ В ИЗБРАННОЕ
   const favoriteActions = (productId) => {
@@ -159,12 +159,13 @@ export function Products ({
       </SC.ActionProduct>
       <SC.ProductsList>
       {
-        productsWithCount.map((product) => 
+        products.map((product) => 
           <Product 
             key={product.id} 
             product={product}
             favoriteActions={favoriteActions}
             inFavorites={productsInLS.includes(product.id)} //true => соответсвенно сердце красное
+            count={getProductCountFromCart(product.id)}
             buyProduct={buyProduct}
             increaseProductCount={increaseProductCount}
             decreaseProductCount={decreaseProductCount}

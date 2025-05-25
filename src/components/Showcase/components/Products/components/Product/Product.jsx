@@ -3,7 +3,9 @@ import React from "react";
 import * as SC from './styles'
 
 
-export function Product({ product, favoriteActions, inFavorites, buyProduct, increaseProductCount, decreaseProductCount }) {
+export function Product({ product, favoriteActions, inFavorites, count,
+  buyProduct, increaseProductCount, decreaseProductCount }) {
+
 
   return(
     <SC.Product>
@@ -25,10 +27,10 @@ export function Product({ product, favoriteActions, inFavorites, buyProduct, inc
     <SC.BuyWrap>
       <SC.BuyBtn onClick={() => buyProduct(product)}>Купить</SC.BuyBtn>
       <SC.Counter>
-        <SC.CounterBtn onClick={() => decreaseProductCount(product)} >−</SC.CounterBtn>
+        <SC.CounterBtn onClick={() => decreaseProductCount(product.id)} >−</SC.CounterBtn>
           <SC.Count 
             type="text" 
-            value={product.count} 
+            value={count} 
             readOnly
           />
         <SC.CounterBtn onClick={() => increaseProductCount(product)} >+</SC.CounterBtn>
