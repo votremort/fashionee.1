@@ -22,7 +22,7 @@ export const getProducts = (pagination, sortType, filters) => {
   }
 }
 
-const onSort = (products, type) => {
+export const onSort = (products, type) => {
 
   switch (type) {
     case 'nameAsc':
@@ -44,7 +44,7 @@ const onSort = (products, type) => {
 const onFilter = (filters, products) => {
   let productsForModify = [...products];
 
-  //поиск
+//поиск
   if(filters.search) {
     const searchLowerCase = filters.search.toLowerCase();
     productsForModify = productsForModify.filter((product) => product.name.toLowerCase().indexOf(searchLowerCase)!== -1);
