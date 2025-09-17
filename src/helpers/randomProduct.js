@@ -3,6 +3,7 @@ export const getRandomProduct = ({ products }) => {
   const getRandomId = Math.floor(Math.random() * 24) + 1;
   return products.find((product) => product.id === getRandomId);
 }
+
 //получаем три рандом продукта для вывода в lastViewed
 export const threeRandomProducts = (data) => {
   const randomProducts = []; 
