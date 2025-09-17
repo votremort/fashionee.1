@@ -47,3 +47,92 @@ describe('проверяем работу фильтрa Colors', () => {
     expect(info.products).toEqual(slicedProducts)
   });
 });
+
+describe('Фильтр по категориям', () => {
+  test('Возвращаются товары с категорией Men', () => {
+    const { products } = data;
+    const filters = {
+      search: '',
+      category: 'Men',
+      prices: {},
+      colors: []
+    };
+    const expectedFilteredByMen = products.filter(product => product.categories.includes(filters.category));
+    onSort(expectedFilteredByMen, sortType);
+    
+    //пагинация
+    const startIndex = pagination.page * pagination.itemsPerPage;
+    const slicedProducts = expectedFilteredByMen.slice(startIndex, startIndex + pagination.itemsPerPage);
+    
+    const result = getProducts(pagination, sortType, filters);
+
+    expect(result.products).toEqual(slicedProducts);
+    expect(result.total).toBe(expectedFilteredByMen.length)
+
+  });
+
+  test('Если категория не задана, возвращаются все товары', () => {
+    const { products } = data;
+    const filters = {
+      search: '',
+      category: '',
+      prices: {},
+      colors: []
+    };  
+
+    onSort(products, sortType);
+
+    const startIndex = pagination.page * pagination.itemsPerPage;
+    const slicedProducts = products.slice(startIndex, startIndex + pagination.itemsPerPage);
+    
+    const result = getProducts(pagination, sortType, filters);
+
+    expect(result.products).toEqual(slicedProducts);
+    expect(result.total).toBe(products.length);
+  })
+});
+
+describe('Проверка фильтрации по поиску', () => {
+  test('Вoзвращаются товары содержащие "st"', () => {
+    const { products } = data;
+    const filters = {
+      search: 'st',
+      category: '',
+      prices: {},
+      colors: []
+    };  
+    const expectedFilteredByST = products.filter(product => 
+      product.name.toLowerCase().includes(filters.search.toLowerCase())
+    );
+    onSort(expectedFilteredByST, sortType);
+
+    const startIndex = pagination.page * pagination.itemsPerPage;
+    const slicedProducts = products.slice(startIndex, startIndex + pagination.itemsPerPage);
+    
+    const result = getProducts(pagination, sortType, filters);
+
+    expect(result.products).toEqual(slicedProducts);
+    expect(result.total).toBe(expectedFilteredByST.length)
+  });
+
+  test('Если поисковый запрос пустой, возвращаются все товары', () => {
+    const filters = {
+      search: '',
+      category: '',
+      prices: {},
+      colors: [],
+    };
+
+    const { products } = data;
+
+    onSort(products, sortType);
+
+    const startIndex = pagination.page * pagination.itemsPerPage;
+    const slicedProducts = products.slice(startIndex, startIndex + pagination.itemsPerPage);
+
+    const result = getProducts(pagination, sortType, filters);
+
+    expect(result.products).toEqual(slicedProducts);
+    expect(result.total).toBe(products.length);
+  });
+});
