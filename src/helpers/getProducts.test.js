@@ -6,6 +6,17 @@ const pagination = {
   itemsPerPage: itemsPerPage
 };
 
+const filterBySearch = (products, search) => {
+  if(!search) return [...products];
+  const searchLower = search.toLowerCase();
+  return products.filter(product => product.name.toLowerCase().includes(searchLower));
+};
+
+const filterByCategory = (products, category) => {
+  if (!category) return [...products];
+  return products.filter(product => product.categories.includes(category));
+}
+
 const sortType = 'priceAsk';
 describe('проверяем работу фильтрa Colors', () => {
   test('По фильтру Red вернулись товары с цветом Red', () => {
@@ -73,22 +84,23 @@ describe('Фильтр по категориям', () => {
 
   test('Если категория не задана, возвращаются все товары', () => {
     const { products } = data;
+    const pagination = {
+      page: 0,
+      itemsPerPage: 1000
+    };
+    const sortType = '';
     const filters = {
       search: '',
       category: '',
       prices: {},
       colors: []
     };  
-
-    onSort(products, sortType);
-
-    const startIndex = pagination.page * pagination.itemsPerPage;
-    const slicedProducts = products.slice(startIndex, startIndex + pagination.itemsPerPage);
+    const expectedFiltered = filterByCategory(products, filters.category)
     
     const result = getProducts(pagination, sortType, filters);
 
-    expect(result.products).toEqual(slicedProducts);
-    expect(result.total).toBe(products.length);
+    expect(result.products).toEqual(expectedFiltered.slice(0, pagination.itemsPerPage));
+    expect(result.total).toBe(expectedFiltered.length);
   })
 });
 
@@ -107,7 +119,7 @@ describe('Проверка фильтрации по поиску', () => {
     onSort(expectedFilteredByST, sortType);
 
     const startIndex = pagination.page * pagination.itemsPerPage;
-    const slicedProducts = products.slice(startIndex, startIndex + pagination.itemsPerPage);
+    const slicedProducts = expectedFilteredByST.slice(startIndex, startIndex + pagination.itemsPerPage);
     
     const result = getProducts(pagination, sortType, filters);
 
@@ -122,17 +134,18 @@ describe('Проверка фильтрации по поиску', () => {
       prices: {},
       colors: [],
     };
+       const pagination = {
+      page: 0,
+      itemsPerPage: 1000
+    };
+    const sortType = '';
 
     const { products } = data;
-
-    onSort(products, sortType);
-
-    const startIndex = pagination.page * pagination.itemsPerPage;
-    const slicedProducts = products.slice(startIndex, startIndex + pagination.itemsPerPage);
+    const expectedFilteredSearch = filterBySearch(products, filters.search)
 
     const result = getProducts(pagination, sortType, filters);
 
-    expect(result.products).toEqual(slicedProducts);
-    expect(result.total).toBe(products.length);
+    expect(result.products).toEqual(expectedFilteredSearch.slice(0, pagination.itemsPerPage));
+    expect(result.total).toBe(expectedFilteredSearch.length);
   });
 });
